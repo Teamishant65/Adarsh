@@ -1,0 +1,158 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XADARSHX Prediction App</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
+</head>
+<body>
+    <header>
+        <h1>XADARSHX PREDECTION</h1>
+    </header>
+    <main>
+        <div class="timer-section">
+            <h2>Current Period: <span id="period">Loading...</span></h2>
+            <h3>: <span id="timer">00:00</span></h3>
+        </div>
+        <div class="prediction-section">
+            <h2>Prediction Result: <span id="result">...</span></h2>
+           
+            </text>
+        </div>
+        <div class="telegram-section">
+            <button id="telegram-btn" onclick="window.open('https://t.me/xadarshxmod', '_blank')">Join Telegram</button>
+        </div>
+    </main>
+    <footer>
+        <p>Developed by <strong>XADARSHX</strong></p>
+    </footer>
+</body>
+</html><style>/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Header */
+header {
+    background-color: #0078D7;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+/* Main Content */
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.timer-section, .prediction-section, .telegram-section {
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    margin: 10px 0;
+    width: 90%;
+    max-width: 400px;
+}
+
+.timer-section h2, .prediction-section h2 {
+    margin: 0 0 10px 0;
+    font-size: 18px;
+}
+
+#predict-btn, #telegram-btn {
+    background-color: #0078D7;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+#predict-btn:hover, #telegram-btn:hover {
+    background-color: #005bb5;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 10px;
+    background: #f0f0f0;
+    font-size: 14px;
+}</style><script>let currentPeriod = "";
+
+// Function to get the current period
+function getCurrentPeriod() {
+    const now = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
+    const currentDate = new Date(now);
+    const periodDate = currentDate.toISOString().split('T')[0].replace(/-/g, '');
+    const totalMinutes = currentDate.getHours() * 60 + currentDate.getMinutes() + 1;
+    const periodNumber = String(totalMinutes).padStart(4, '0');
+    return periodDate + periodNumber;
+}
+
+// Function to predict BIG/SMALL
+function predict() {
+    const options = ["BIG", "SMALL"];
+    const randomIndex = Math.floor(Math.random() * options.length);
+    return options[randomIndex];
+}
+
+// Function to update the timer
+function updateTimer() {
+    const now = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
+    const currentDate = new Date(now);
+    const remainingSeconds = 60 - currentDate.getSeconds();
+    document.getElementById('timer').textContent = `00:${String(remainingSeconds).padStart(2, '0')}`;
+}
+
+// Function to refresh the period and prediction
+function checkAndRefreshPeriod() {
+    const newPeriod = getCurrentPeriod();
+    if (newPeriod !== currentPeriod) {
+        currentPeriod = newPeriod;
+        document.getElementById('period').textContent = currentPeriod;
+        document.getElementById('result').textContent = predict();
+    }
+}
+
+// Set up initial values and periodic updates
+document.addEventListener("DOMContentLoaded", function () {
+    currentPeriod = getCurrentPeriod();
+    document.getElementById('period').textContent = currentPeriod;
+
+    updateTimer();
+    document.getElementById('result').textContent = predict();
+
+    setInterval(updateTimer, 1000); // Update timer every second
+    setInterval(checkAndRefreshPeriod, 1000); // Refresh period and prediction every second
+
+    // Handle button click for manual prediction
+    document.getElementById('predict-btn').addEventListener('click', () => {
+        document.getElementById('result').textContent = predict();
+    });
+});</script>#9f0909
